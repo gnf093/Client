@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jogo</title>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+    </head>
+	<body>
+
+		<canvas id="myCanvas" width="640" height="480" >
+		Your browser does not support the HTML5 canvas tag.</canvas>
+		<img id="source" src="Images/freeknight/png/Attack (1).png" width="300" height="227" >
+		<img id="fundo" src="Images/background.jpg" width="300" height="227" hidden="true">
+
+		<script>
+			window.onload = function(){
+				var canvas = document.getElementById("myCanvas");
+				var ctx = canvas.getContext("2d");
+				var image = document.getElementById('source');
+				var fundo = document.getElementById('fundo');
+				var cx = 100;
+				var cy = 100;
+				var i = 1;
+				document.onkeypress = function(event){ acao(event); }
+
+				function acao(event){
+					var x = event.which || event.keyCode;
+					console.log(x);
+					if(x == 119){
+						pula();
+					}else if (x == 32) {
+						i = 1;
+						ataque();
+					}else if (x == 100) {
+						direita();
+					}else if (x == 97) {
+						esquerda();
+					}
+				}
+
+
+
+				function desenho(){
+					ctx.clearRect(0, 0, 500, 500);
+					// ctx.drawImage(fundo, 0, 0, 640, 480);
+					var string = 'Images/freeknight/png/Idle ('+i+').png'
+					// var string = 'Images/geeky.jpg';
+					image.src = string;
+					// ctx.drawImage(image, 0, 0, 50, 60, cx, cy, 58, 70);
+					ctx.drawImage(image, cx, cy, 58, 70);
+					t = setTimeout(function() { desenho() }, 150);
+					i++;
+					if (i > 10) {
+						i = 1;
+					}
+					// console.log(i);
+				}
+				desenho();
+
+				function ataque(){
+					clearTimeout(t);
+					ctx.clearRect(0, 0, 500, 500);
+					// ctx.drawImage(fundo, 0, 0, 640, 480);
+					var string = 'Images/freeknight/png/Attack ('+i+').png'
+					image.src = string;
+					ctx.drawImage(image, cx, cy, 58, 70);
+					s = setTimeout(function() { ataque() }, 90);
+					i++;
+					if (i > 10) {
+						i = 1;
+						clearTimeout(s);
+						desenho();
+					}
+					
+				}
+				function pula(){
+					clearTimeout(t);
+					cy = 80;
+					ctx.clearRect(0, 0, 500, 500);
+					// ctx.drawImage(fundo, 0, 0, 640, 480);
+					var string = 'Images/freeknight/png/Jump ('+i+').png'
+					image.src = string;
+					ctx.drawImage(image, cx, cy, 58, 70);
+					p = setTimeout(function() { pula() }, 90);
+					i++;
+					if (i > 10) {
+						i = 1;
+						clearTimeout(p);
+						cy = 100;
+						desenho();
+					}
+					
+				}
+				function direita(){
+					clearTimeout(t);
+					cx += 2;
+					ctx.clearRect(0, 0, 500, 500);
+					// ctx.drawImage(fundo, 0, 0, 640, 480);
+					var string = 'Images/freeknight/png/Walk ('+i+').png'
+					image.src = string;
+					ctx.drawImage(image, cx, cy, 58, 70);
+					p = setTimeout(function() { direita() }, 90);
+					i++;
+					if (i > 10) {
+						i = 1;
+						clearTimeout(p);
+						desenho();
+					}
+				}
+				function esquerda(){
+					clearTimeout(t);
+					cx -= 2;
+					ctx.clearRect(0, 0, 500, 500);
+					// ctx.drawImage(fundo, 0, 0, 640, 480);
+					var string = 'Images/freeknight/png/Walk ('+i+').png'
+					image.src = string;
+					ctx.drawImage(image, cx, cy, 58, 70);
+					p = setTimeout(function() { esquerda() }, 90);
+					i++;
+					if (i > 10) {
+						i = 1;
+						clearTimeout(p);
+						desenho();
+					}
+				}
+
+
+	
+			}
+		</script>
+	</body>
+</html>
